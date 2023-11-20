@@ -48,10 +48,10 @@ class site_checker:
                     if model in namemodel:
                         for diferen in diferences:
                             if diferen in namemodel:
-                                self.price_list.append([phonemodel + model + ' ' + diferen, int(price_num)])
+                                self.price_list.append((phonemodel + model + ' ' + diferen, int(price_num)))
                                 continue
 
-                        self.price_list.append([phonemodel + model, int(price_num)])
+                        self.price_list.append((phonemodel + model, int(price_num)))
 
             j += 1
         return self.price_list
