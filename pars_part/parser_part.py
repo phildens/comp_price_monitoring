@@ -62,5 +62,5 @@ class site_checker:
                 self.unique_list.append(i[0])
         return self.unique_list
 
-#test = site_checker()
-#print(test.price_list[0][0])
+test = site_checker()
+print(test.price_list[0])
