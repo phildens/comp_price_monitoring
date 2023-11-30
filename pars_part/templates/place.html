@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Стоимость замены дисплея
+{% endblock %}
+
+{% block content %}
+<h1 class="mb-5">Стоимость замены дисплея</h1>
+
+<div class="card-columns">
+  <div class="row">
+  {% for i in iphones %}
+    <div class="col-md-3">
+      <div class="card mb-3">
+          <div class="card-header fw-bold">Модель</div>
+          <div class="card-body">
+              <p class="badge bg-primary text-wrap">{{i.model}}</p>
+              <p class="card-text">Цена 
+              <strong>{{i.cost}}</strong></p>
+              
+          </div>
+      </div>
+    </div>
+  {% endfor %}
+  </div>
+</div>
+
+{% endblock %}
