@@ -42,10 +42,26 @@ def add_models_to_db():
         if i[0] in models and not(i[0] in checked_models):
             checked_models.append(i)
     #print(checked_models)
+
+    unique_models = []
+    
+    for i in checked_models:
+        if not(i[0] in unique_models):
+            unique_models.append(i[0])
+
+    all_sorted = []
+    for i in unique_models:
+        cost = 0
+        for a in checked_models:
+            if a[0] == i and a[1] > cost:
+                cost = a[1]
+        all_sorted.append([i, cost])
+    print(all_sorted)
+
     with sqlite3.connect('models_bd.db') as conn:
         cur = conn.cursor()
         create_tables(cur, conn)
-        db_adder(cur, conn, checked_models)
+        db_adder(cur, conn, all_sorted)
 
     
 

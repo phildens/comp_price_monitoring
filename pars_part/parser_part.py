@@ -60,6 +60,7 @@ class site_checker:
         for i in self.price_list:
             if not(i[0] in self.unique_list):
                 self.unique_list.append(i[0])
+                
         return self.unique_list
 
 test = site_checker()

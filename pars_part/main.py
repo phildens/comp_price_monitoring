@@ -2,7 +2,7 @@ from flask import Flask, render_template
 import sqlite3
 
 class model:
-    def __init__(self, modele, coste) -> None:
+    def __init__(self, modele, coste):
         self.model = modele
         self.cost = str(int(coste * 1.25))
         self.realcost = coste
