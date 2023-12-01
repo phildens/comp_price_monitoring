@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  flasker:
+    build: flask_part
+    volumes:
+      - databas:/usr/src/app/databas
+    ports:
+      - 5000:5000
+
+      
+  parser:
+    build: pars_part/
+    volumes:
+      - databas:/usr/src/app/databas
+
+  
+
+
+volumes:
+  databas:

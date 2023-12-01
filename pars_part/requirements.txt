@@ -1,0 +1,12 @@
+beautifulsoup4
+blinker
+bs4
+click
+itsdangerous
+
+MarkupSafe
+pip
+setuptools
+soupsieve
+Werkzeug
+wheel

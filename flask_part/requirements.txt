@@ -1,0 +1,11 @@
+blinker       
+bs4
+click
+Flask
+itsdangerous
+Jinja2
+MarkupSafe
+pip
+setuptools
+soupsieve
+wheel
