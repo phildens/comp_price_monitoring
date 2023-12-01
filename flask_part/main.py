@@ -7,7 +7,7 @@ class model:
         self.cost = str(int(coste * 1.25))
         self.realcost = coste
 
-with sqlite3.connect('models_bd.db') as conn:
+with sqlite3.connect('databas/models_bd.db') as conn:
     cur = conn.cursor()
     info_from_bd = cur.execute("""
     SELECT * FROM models;
@@ -28,4 +28,4 @@ app = Flask("site_services")
 def hello():
     return render_template('place.html', iphones = phone)
 
-app.run()
+app.run(host='0.0.0.0')
