@@ -58,7 +58,7 @@ def add_models_to_db():
         all_sorted.append([i, cost])
     print(all_sorted)
 
-    with sqlite3.connect('models_bd.db') as conn:
+    with sqlite3.connect('databas/models_bd.db') as conn:
         cur = conn.cursor()
         create_tables(cur, conn)
         db_adder(cur, conn, all_sorted)
