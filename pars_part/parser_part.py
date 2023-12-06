@@ -2,7 +2,7 @@ import urllib.request
 import re
 from bs4 import BeautifulSoup
 
-stoper = 'table_body report new_report sticky-th flex-list-tovar descr list list1 hid_tov_tab table_catalog'
+stoper = 'table_body report new_report sticky-th flex-list-tovar descr list list1 table_catalog'
 models = ['X', '8', '7', '6', '6S', '11', '5S', 'XR', 'XS', '12', '13', '14']
 diferences = ['Pro', 'Plus', 'Pro Max', 'mini', 'Max', 'Mini']
 
@@ -20,12 +20,12 @@ class site_checker:
         self.price_list.clear()
         while j < 50:
             request = urllib.request.urlopen(
-                f'https://perm.gsm-opt.ru/zapchasti-dlya-apple/displei/?nalichie_n=0&sortirovka=sales&num_on_page=50&page={j}&vid=0')
+                f'https://perm.gsm-opt.ru/zapchasti-dlya-apple/displei/?&nalichie_n=0&sortirovka=sales&num_on_page=50&page={j}&vid=0')
             page = request.read()
             bsobject = BeautifulSoup(page, 'html.parser')
-            getcontrol = bsobject.find('div', {'class': stoper}).find('p').text
+            getcontrol = bsobject.find('div', {'class': stoper}).text
 
-            if getcontrol == 'Ничего не найдено':
+            if 'Ничего не найдено' in getcontrol:
                 break
             get_displays = bsobject.findAll('div', {'class': 'cat_list_el'})
             for i in get_displays:
