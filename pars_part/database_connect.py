@@ -1,25 +1,26 @@
 from parser_part import site_checker
 import sqlite3
-
+import psycopg2
+import time
 
 
 def getinfo_bd(cur, conn):
     pass
 
 def create_tables(cur, conn):
-    listOfTables = cur.execute(
-        "SELECT * FROM sqlite_master WHERE type='table'; ").fetchall()
-    
-    if listOfTables == []:
-        print('created')
-    
-    cur.execute('DROP TABLE IF EXISTS models')
-
-
+    table_cheecker = cur.execute('''SELECT * FROM INFORMATION_SCHEMA.TABLES
+                                        WHERE TABLE_NAME = 'models';''')
+    print(cur.rowcount)
+    if cur.rowcount == 0:
+        print('notable created')
+    else:
+        print('deleted db')
+            
+    cur.execute('DROP TABLE IF EXISTS public.models')
     cur.execute("""
-    CREATE TABLE models (id INTEGER PRIMARY KEY AUTOINCREMENT,
-         name_model VARCHAR(255),
-         price INTEGER)""")
+                    CREATE TABLE public.models (id SERIAL PRIMARY KEY ,
+                    name_model VARCHAR(255),
+                    price INTEGER)""")
 
     conn.commit()
     #print(listOfTables[0][1])
@@ -27,7 +28,7 @@ def create_tables(cur, conn):
 def db_adder(cur, conn, models):
     for i in models:
         cur.execute("""INSERT INTO models(name_model, price)
-        VALUES(?,?);
+        VALUES(%s, %s);
         """,i)
     conn.commit()
 
@@ -58,14 +59,47 @@ def add_models_to_db():
         all_sorted.append([i, cost])
     print(all_sorted)
 
-    with sqlite3.connect('databas/models_bd.db') as conn:
-        cur = conn.cursor()
+
+    while True:
+        try:
+            # пытаемся подключиться к базе данных
+            conn = psycopg2.connect(dbname='dataholder', user='user0', 
+                                password='passwrd', host='localhost', port = '5432')
+            print('connectted db')
+            break
+        except:
+            time.sleep(5)
+            # в случае сбоя подключения будет выведено сообщение  в STDOUT
+            print('Can`t establish connection to database')
+
+
+
+    with conn.cursor() as cur:
         create_tables(cur, conn)
         db_adder(cur, conn, all_sorted)
+
 
     
 
 add_models_to_db()
+
+# while True:
+#     try:
+#         # пытаемся подключиться к базе данных
+#         conn = psycopg2.connect(dbname='dataholder', user='user0', 
+#                                 password='passwrd', host='localhost', port = '5432')
+#         print('connectted db')
+#         break
+#     except:
+#         time.sleep(5)
+#         # в случае сбоя подключения будет выведено сообщение  в STDOUT
+#         print('Can`t establish connection to database')
+
+
+
+# with conn.cursor() as cur:
+#     create_tables(cur, conn)
+#     db_adder(cur, conn, all_sorted)
 
 #add_models_to_db()
 # checked_models = ['iphone', 5300]
