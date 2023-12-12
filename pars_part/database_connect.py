@@ -81,7 +81,7 @@ def add_models_to_db():
 
     
 
-add_models_to_db()
+#add_models_to_db()
 
 # while True:
 #     try:
