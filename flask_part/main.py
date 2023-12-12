@@ -14,7 +14,7 @@ def connect_users():
             # пытаемся подключиться к базе данных
             conn = psycopg2.connect(dbname='dataholder', user='user0', 
                                     
-                                password='passwrd', host='localhost', port = '5432')
+                                password='passwrd', host='postgres', port = '5432')
             print('connectted db')
             break
         except:
@@ -27,8 +27,13 @@ def connect_users():
             with conn.cursor() as cur:
                 cur.execute("""SELECT * FROM public.models;""")
                 info_from_bd = cur.fetchall()
+            if len(info_from_bd) == 0:
+                time.sleep(10)
+        
         except:
+            time.sleep(10)
             pass
+        
         
     print(info_from_bd)
 

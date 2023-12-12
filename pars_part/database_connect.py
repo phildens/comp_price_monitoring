@@ -64,7 +64,7 @@ def add_models_to_db():
         try:
             # пытаемся подключиться к базе данных
             conn = psycopg2.connect(dbname='dataholder', user='user0', 
-                                password='passwrd', host='localhost', port = '5432')
+                                password='passwrd', host='postgres', port = '5432')
             print('connectted db')
             break
         except:
@@ -81,7 +81,7 @@ def add_models_to_db():
 
     
 
-#add_models_to_db()
+add_models_to_db()
 
 # while True:
 #     try:
