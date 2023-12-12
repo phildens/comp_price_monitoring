@@ -3,19 +3,43 @@ version: '3'
 services:
   flasker:
     build: flask_part
-    volumes:
-      - databas:/usr/src/app/databas
     ports:
       - 5000:5000
+    depends_on:
+      - parser
+    links:
+      - "postgres:postgres"
+    networks:
+      - basenet
 
-      
   parser:
     build: pars_part/
+    depends_on:
+      - postgres
+    networks:
+      - basenet
+    links:
+      - "postgres:postgres"
+
+  postgres:
+    image: postgres:14.8-alpine3.18
+    expose:
+      - 5432
+    environment:
+      POSTGRES_DB: "dataholder"
+      POSTGRES_USER: "user0"
+      POSTGRES_PASSWORD: "passwrd"
+      PGDATA: "/var/lib/postgresql/data/pgdata"
     volumes:
-      - databas:/usr/src/app/databas
-
-  
-
+      - ../2. Init Database:/docker-entrypoint-initdb.d
+      - habrdb-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - basenet
 
 volumes:
-  databas:
+  habrdb-data:
+
+networks:
+  basenet:

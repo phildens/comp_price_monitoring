@@ -9,3 +9,4 @@ pip
 setuptools
 soupsieve
 wheel
+psycopg2-binary

@@ -10,3 +10,4 @@ setuptools
 soupsieve
 Werkzeug
 wheel
+psycopg2-binary

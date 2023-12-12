@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 import sqlite3
-
+import psycopg2
+import time
 class model:
     def __init__(self, modele, coste):
         self.model = modele
@@ -8,16 +9,31 @@ class model:
         self.realcost = coste
 
 def connect_users():
+    while True:
+        try:
+            # пытаемся подключиться к базе данных
+            conn = psycopg2.connect(dbname='dataholder', user='user0', 
+                                    
+                                password='passwrd', host='postgres', port = '5432')
+            print('connectted db')
+            break
+        except:
+            time.sleep(5)
+            # в случае сбоя подключения будет выведено сообщение  в STDOUT
+            print('Can`t establish connection to database')
     info_from_bd = []
     while len(info_from_bd) == 0:
         try:
-            with sqlite3.connect('databas/models_bd.db') as conn:
-                cur = conn.cursor()
-                info_from_bd = cur.execute("""
-                SELECT * FROM models;
-                """).fetchall()
+            with conn.cursor() as cur:
+                cur.execute("""SELECT * FROM public.models;""")
+                info_from_bd = cur.fetchall()
+            if len(info_from_bd) == 0:
+                time.sleep(10)
+        
         except:
+            time.sleep(10)
             pass
+        
         
     print(info_from_bd)
 
