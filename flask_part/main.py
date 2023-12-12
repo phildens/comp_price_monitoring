@@ -11,7 +11,6 @@ class model:
 def connect_users():
     while True:
         try:
-            # пытаемся подключиться к базе данных
             conn = psycopg2.connect(dbname='dataholder', user='user0', 
                                     
                                 password='passwrd', host='postgres', port = '5432')
@@ -19,8 +18,8 @@ def connect_users():
             break
         except:
             time.sleep(5)
-            # в случае сбоя подключения будет выведено сообщение  в STDOUT
             print('Can`t establish connection to database')
+            
     info_from_bd = []
     while len(info_from_bd) == 0:
         try:
